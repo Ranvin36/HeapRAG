@@ -24,9 +24,9 @@ type Proxy struct {
 
 // ProxyErrorResponse represents the JSON structure for proxy-level errors.
 type ProxyErrorResponse struct {
-	Error     string `json: "error"`
-	Message   string `json: "message"`
-	RequestID string `json: "request_id"`
+	Error     string `json:"error"`
+	Message   string `json:"message"`
+	RequestID string `json:"request_id"`
 }
 
 // NewProxy creates and configures a new ReverseProxy instance.
