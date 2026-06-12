@@ -113,8 +113,13 @@ func (p *Proxy) errorHandler(w http.ResponseWriter, r *http.Request, err error) 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 
+	errorText := http.StatusText(statusCode)
+	if errorText == "" {
+		errorText = "Client Closed Request"
+	}
+
 	resp := ProxyErrorResponse{
-		Error:     http.StatusText(statusCode),
+		Error:     errorText,
 		Message:   err.Error(),
 		RequestID: reqID,
 	}
