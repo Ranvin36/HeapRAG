@@ -57,11 +57,10 @@ func main() {
 
 	// 5. Configure HTTP server
 	server := &http.Server{
-		Addr:         cfg.Port,
-		Handler:      handler,
-		ReadTimeout:  15 * time.Second,
-		WriteTimeout: 15 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		Addr:              cfg.Port,
+		Handler:           handler,
+		ReadHeaderTimeout: 10 * time.Second,
+		IdleTimeout:       60 * time.Second,
 	}
 
 	// 6. Start server in a background goroutine

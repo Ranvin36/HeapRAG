@@ -24,9 +24,9 @@ type Proxy struct {
 
 // ProxyErrorResponse represents the JSON structure for proxy-level errors.
 type ProxyErrorResponse struct {
-	Error     string `json: "error"`
-	Message   string `json: "message"`
-	RequestID string `json: "request_id"`
+	Error     string `json:"error"`
+	Message   string `json:"message"`
+	RequestID string `json:"request_id"`
 }
 
 // NewProxy creates and configures a new ReverseProxy instance.
@@ -91,7 +91,7 @@ func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // errorHandler intercepts proxying failures (e.g. backend unreachable) and writes JSON.
 func (p *Proxy) errorHandler(w http.ResponseWriter, r *http.Request, err error) {
 	reqID := middleware.GetRequestID(r.Context())
-	
+
 	// Determine the error type to provide an appropriate HTTP status
 	statusCode := http.StatusBadGateway
 	if errors.Is(err, context.Canceled) {
@@ -118,10 +118,10 @@ func (p *Proxy) errorHandler(w http.ResponseWriter, r *http.Request, err error) 
 		Message:   err.Error(),
 		RequestID: reqID,
 	}
-	
+
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
-		p.logger.Error("Failed to write proxy error response", 
-			slog.String("request_id", reqID), 
+		p.logger.Error("Failed to write proxy error response",
+			slog.String("request_id", reqID),
 			slog.Any("error", err),
 		)
 	}

@@ -43,7 +43,7 @@ func LoadConfig() (*Config, error) {
 
 	rawTarget := *targetFlag
 	if rawTarget == "" {
-		rawTarget = getEnv("PROXY_TARGET_URL", "https://httpbin.org")
+		rawTarget = getEnv("PROXY_TARGET_URL", "http://localhost:11434")
 	}
 	targetURL, err := url.Parse(rawTarget)
 	if err != nil {
